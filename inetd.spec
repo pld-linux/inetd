@@ -8,10 +8,11 @@ Version:	0.17
 Release:	5
 License:	BSD
 Group:		Daemons
+Group(de):	Server
 Group(pl):	Serwery
 Source0:	ftp://ftp.linux.org.uk/pub/linux/Networking/netkit/netkit-base-%{version}.tar.gz
-Source1:	inetd.inet.sh
-Source2:	inetd.conf.5
+Source1:	%{name}.inet.sh
+Source2:	%{name}.conf.5
 Patch0:		netkit-base-configure.patch
 Provides:	inetdaemon
 Prereq:		rc-scripts
@@ -38,7 +39,7 @@ Ce paquetage contient les programm inetd, tous deux utilisés pour le
 réseau.
 
 %description -l pl
-W pakiecie tym zanjduje siê program inetd. Inetd wychwytuje ¿±dania
+W pakiecie tym znajduje siê program inetd. Inetd wychwytuje ¿±dania
 po³±czeñ na portach sieciowych odsy³aj±c je do uruchamianego przez
 siebie konkretnego programu, który ma je obs³u¿yæ.
 
