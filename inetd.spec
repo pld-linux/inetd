@@ -51,7 +51,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 install -d $RPM_BUILD_ROOT/usr/{sbin,man/{man8,man3}}
 
-install inetd/inetd $RPM_BUILD_ROOT/usr/sbin
+install inetd/inetd $RPM_BUILD_ROOT%{_sbindir}
 
 install inetd/*.8 $RPM_BUILD_ROOT%{_mandir}/man8
 install inetd/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
@@ -78,7 +78,7 @@ fi
 %config(noreplace) %verify(not size mtime md5) /etc/inetd.conf
 
 %attr(750,root,root) %config /etc/rc.d/init.d/inetd
-%attr(755,root,root) /usr/sbin/inetd
+%attr(755,root,root) %{_sbindir}/inetd
 %{_mandir}/man[38]/*
 
 %changelog
