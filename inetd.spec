@@ -9,9 +9,11 @@ Release:	8
 License:	BSD
 Group:		Daemons
 Source0:	ftp://ftp.linux.org.uk/pub/linux/Networking/netkit/netkit-base-%{version}.tar.gz
+# Source0-md5:	1f0193358e92559ec0f598b09ccbc0ec
 Source1:	%{name}.inet.sh
 Source2:	%{name}.conf.5
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
+# Source3-md5:	6e7cdb6277c4333a9c0d1e3e2231f29f
 Patch0:		netkit-base-configure.patch
 PreReq:		rc-scripts
 Requires:	rc-inetd >= 0.8.1
