@@ -55,6 +55,7 @@ parse_one_service()
 	fi
 
 	[ "$SERVER" = "tcpd" ] && SERVER="/usr/sbin/tcpd"
+	[ "${MAX_CONNECTIONS:-none}" = "none" ] || FLAGS="$FLAGS.$MAX_CONNECTIONS"
 	[ "${GROUP:-none}" = "none" ] || USER="$USER.$GROUP"
 	# if we have service on some unusual port, or have some service with strange name
 	# how to grep tab???   quoting it ?
