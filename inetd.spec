@@ -5,7 +5,7 @@ Summary(pl):	Super-serwer sieciowy -- inetd
 Summary(tr):	inetd programlarýný içerir
 Name:		inetd
 Version:	0.17
-Release:	7
+Release:	8
 License:	BSD
 Group:		Daemons
 Source0:	ftp://ftp.linux.org.uk/pub/linux/Networking/netkit/netkit-base-%{version}.tar.gz
@@ -69,8 +69,6 @@ install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/man5
 
 bzip2 -dc %{SOURCE3} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
-gzip -9nf README ChangeLog
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -88,7 +86,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc {README,ChangeLog}.gz
+%doc README ChangeLog
 
 %attr(640,root,root) %ghost %{_sysconfdir}/inetd.conf
 %attr(640,root,root) /etc/sysconfig/rc-inet.script
