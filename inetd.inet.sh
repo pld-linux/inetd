@@ -71,7 +71,7 @@ parse_one_service()
 
 status_rc_inetd()
 {
-	return 0
+	status $INETDAEMON
 }
 reload_config()
 {
