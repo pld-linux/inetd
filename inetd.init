@@ -4,42 +4,43 @@
 #               sets the hostname, creates the routes and
 #               starts the Internet Network Daemon & RPC portmapper.
 #
-# Author:       Miquel van Smoorenburg, <miquels@drinkel.nl.mugnet.org>
-#               Various folks at Red Hat -- overlocked by Wojtek ¦lusarczyk \
-#		<wojtek@SHADOW.EU.ORG> for Linux PLD
+# chkconfig:	345 50 50
 #
-# chkconfig: 345 50 50
-# description: The internet superserver daemon (commonly called inetd) \
-#              starts a variety of other internet services as needed. It \
-#              is responsible for starting many services, including telnet, \
-#              ftp, rsh, and rlogin. Disabling inetd disables all of the \
-#              services it is responsible for.
-# processname: inetd
-# pidfile: /var/run/inetd.pid
-# config: /etc/sysconfig/network
-# config: /etc/inetd.conf
+# description:	The internet superserver daemon (commonly called inetd) \
+#		starts a variety of other internet services as needed. It \
+#		is responsible for starting many services, including telnet, \
+#		ftp, rsh, and rlogin. Disabling inetd disables all of the \
+#		services it is responsible for.
+#
+# processname:	inetd
+# pidfile:	/var/run/inetd.pid
+# config:	/etc/sysconfig/network
+# config:	/etc/inetd.conf
 
 
-# Source function library.
+# Source function library
 . /etc/rc.d/init.d/functions
 
-# Get config.
+# Get network config
 . /etc/sysconfig/network
 
+# Get service config
+[ -f /etc/sysconfig/inetd ] && . /etc/sysconfig/inetd
+
 # Check that networking is up.
-[ "${NETWORKING}" = "no" ] && exit0
+[ "${NETWORKING}" = "no" ] && echo "Error: Networking is down"; exit 0
 
-[ -f /usr/sbin/inetd ] || exit 0
 
-# Get options... if exists.
-if [ -f /etc/sysconfig/inetd ]; then
-    . /etc/sysconfig/inetd
-fi
 # See how we were called.
 case "$1" in
   start)
-	show Starting INET services
-	daemon inetd
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/inetd ]; then
+		show Starting INET services
+		daemon inetd
+	else
+		echo "inetd already is running"
+	fi
 	touch /var/lock/subsys/inetd
 	;;
   stop)
