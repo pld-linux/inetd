@@ -14,7 +14,7 @@ Source1:	inetd.inet.sh
 Source2:	inetd.conf.5
 Patch0:		netkit-base-configure.patch
 Provides:	inetdaemon
-Requires:	rc-scripts
+Prereq:		rc-scripts
 Requires:	rc-inetd >= 0.8.1
 Requires:	/etc/rc.d/init.d/rc-inetd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
