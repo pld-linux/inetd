@@ -5,7 +5,7 @@ Summary(pl):	Super-serwer sieciowy -- inetd
 Summary(tr):	inetd programlarýný içerir
 Name:		inetd
 Version:	0.10
-Release:	4d
+Release:	5
 Copyright:	BSD
 Group:		Daemons
 Group(pl):	Serwery
@@ -25,7 +25,7 @@ basic networking.
 
 %description -l pl
 W pakieci tym znjduje siê super demon inetd, który kontroluje pracê 
-wiêkszo¶ci serwisów sieciowych twojego Linuxa.
+wiêkszo¶ci serwisów sieciowych Linuxa.
 
 %description -l de
 Dieses Paket stellt das inetd-Programm bereit, der für elementare 
@@ -48,7 +48,6 @@ make OPT_FLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 install -d $RPM_BUILD_ROOT/usr/{sbin,man/{man8,man3}}
 
@@ -60,8 +59,7 @@ install inetd/*.3 $RPM_BUILD_ROOT/usr/man/man3
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/inetd.conf
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/inetd
 
-gzip -9fn $RPM_BUILD_ROOT/usr/man/man[38]/*
-bzip2 -9 README ChangeLog
+gzip -9fn $RPM_BUILD_ROOT/usr/man/man[38]/* README ChangeLog
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -76,15 +74,19 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc {README,ChangeLog}.bz2
-
+%doc {README,ChangeLog}.gz
 %config(noreplace) %verify(not size mtime md5) /etc/inetd.conf
 
 %attr(750,root,root) %config /etc/rc.d/init.d/inetd
 %attr(755,root,root) /usr/sbin/inetd
-%attr(644,root, man) /usr/man/man[38]/*
+/usr/man/man[38]/*
 
 %changelog
+* Thu Apr 15 1999 Micha³ Kuratczyk <kura@pld.org.pl>
+  [0.10-5]
+- gzipping documentation (instead bzipping)
+- removed man group from man pages
+
 * Mon Nov 08 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [0.10-2d]
 - fixed symlinks,
