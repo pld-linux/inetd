@@ -17,7 +17,7 @@ Source2:	%{name}.init
 Source3:	%{name}.sysconfig
 Patch0:		%{name}.patch
 Prereq:		/sbin/chkconfig
-Provides:	inetd
+Provides:	inetdaemon
 Requires:	rc-scripts
 Obsoletes:	netkit-base
 Buildroot:	/tmp/%{name}-%{version}-root
