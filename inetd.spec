@@ -5,8 +5,8 @@ Summary(pl):	Super-serwer sieciowy -- inetd
 Summary(tr):	inetd programlarýný içerir
 Name:		inetd
 Version:	0.16
-Release:	3
-Copyright:	BSD
+Release:	4
+License:	BSD
 Group:		Daemons
 Group(pl):	Serwery
 Source0:	ftp://sunsite.unc.edu/pub/Linux/system/network/netkit-base-%{version}.tar.gz
@@ -28,21 +28,20 @@ listens on certain Internet sockets for connection requests, decides what
 program should receive each request, and starts up that program.
 
 %description -l de
-Dieses Paket stellt das inetd-Programm bereit, der für elementare 
-Netzwerkaufgaben benutzt wird. 
+Dieses Paket stellt das inetd-Programm bereit, der für elementare
+Netzwerkaufgaben benutzt wird.
 
 %description -l fr
-Ce paquetage contient les programm inetd, tous deux utilisés pour
-le réseau.
+Ce paquetage contient les programm inetd, tous deux utilisés pour le
+réseau.
 
 %description -l pl
-W pakiecie tym znjduje siê program inetd. Inetd wychwytuje rz±dania po³±czeñ
-na portach sieciowych odsy³aj±c je do uruchamianego przez siebie konkretnego
-programu, który ma je obs³u¿yæ.
+W pakiecie tym znjduje siê program inetd. Inetd wychwytuje rz±dania
+po³±czeñ na portach sieciowych odsy³aj±c je do uruchamianego przez siebie
+konkretnego programu, który ma je obs³u¿yæ.
 
 %description -l tr
-Bu paket að hizmetlerinde kullanýlan temel yazýlýmlardan inetd 
-içerir.
+Bu paket að hizmetlerinde kullanýlan temel yazýlýmlardan inetd  içerir.
 
 %prep
 %setup -q -n netkit-base-%{version}
@@ -54,19 +53,19 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man{5,8}}
+install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig} \
+	$RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man{5,8}}
 
 install -s inetd/inetd $RPM_BUILD_ROOT%{_sbindir}
 
 install inetd/*.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
-> $RPM_BUILD_ROOT/etc/inetd.conf
+> $RPM_BUILD_ROOT%{_sysconfdir}/inetd.conf
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/rc-inet.script
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/man5
 
-gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[58]/* README ChangeLog
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man[58]/* README ChangeLog
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -87,7 +86,7 @@ fi
 %defattr(644,root,root,755)
 %doc {README,ChangeLog}.gz
 
-%attr(640,root,root) %ghost /etc/inetd.conf
+%attr(640,root,root) %ghost %{_sysconfdir}/inetd.conf
 %attr(640,root,root) /etc/sysconfig/rc-inet.script
 %attr(755,root,root) %{_sbindir}/inetd
 
