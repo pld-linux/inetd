@@ -1,0 +1,19 @@
+diff -Nru netkit-base-0.16/configure netkit-base-0.16.new/configure
+--- netkit-base-0.16/configure	Sun Dec 12 19:35:56 1999
++++ netkit-base-0.16.new/configure	Mon Jan 10 04:31:20 2000
+@@ -132,12 +132,12 @@
+ fi
+ 
+ if [ x$DEBUG = x ]; then
+-    echo -n "Checking if $CC accepts -O2... "
++    echo -n "Checking if $CC accepts $RPM_OPT_FLAGS... "
+     if (
+-         $CC -O2 __conftest.c -o __conftest
++         $CC $RPM_OPT_FLAGS __conftest.c -o __conftest
+        ) >/dev/null 2>&1; then
+          echo 'yes'
+-         CFLAGS="$CFLAGS -O2"
++         CFLAGS="$CFLAGS $RPM_OPT_FLAGS"
+     else
+          echo 'no'
+          echo -n "Checking if $CC accepts -O... "
