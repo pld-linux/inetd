@@ -55,7 +55,7 @@ parse_one_service()
 	fi
 
 	[ "$SERVER" = "tcpd" ] && SERVER="/usr/sbin/tcpd"
-
+	[ "${GROUP:-none}" = "none" ] || USER="$USER.$GROUP"
 	echo "$SERVICE_NAME	$SOCK_TYPE	$PROTOCOL	$FLAGS	$USER	$SERVER $DAEMON $DAEMONARGS"
 
 	return 0
