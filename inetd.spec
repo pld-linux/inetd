@@ -8,8 +8,6 @@ Version:	0.17
 Release:	6
 License:	BSD
 Group:		Daemons
-Group(de):	Server
-Group(pl):	Serwery
 Source0:	ftp://ftp.linux.org.uk/pub/linux/Networking/netkit/netkit-base-%{version}.tar.gz
 Source1:	%{name}.inet.sh
 Source2:	%{name}.conf.5
