@@ -93,30 +93,3 @@ fi
 %attr(755,root,root) %{_sbindir}/inetd
 
 %{_mandir}/man[38]/*
-
-%changelog
-* Sat May 22 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [0.10-11]
-- added inetd.sysconfig,
-- fixed %preun && %post,
-- fixes for correct build.
-
-* Thu Apr 15 1999 Micha³ Kuratczyk <kura@pld.org.pl>
-  [0.10-5]
-- gzipping documentation (instead bzipping)
-- removed man group from man pages
-
-* Mon Nov 08 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [0.10-2d]
-- fixed symlinks,
-- fixed %post & %preun sections,
-- added qmail in /etc/inetd.conf.
-
-* Wed Oct 14 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [0.10-1d]
-- build against GNU libc-2.1,
-- removed ping,
-- renamed to inetd,
-- added default kerberized services,
-- major changes - designed for PLD Tornado.
-- start at RH spec.
