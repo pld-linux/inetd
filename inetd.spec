@@ -5,7 +5,7 @@ Summary(pl):	Super-serwer sieciowy -- inetd
 Summary(tr):	inetd programlarýný içerir
 Name:		inetd
 Version:	0.17
-Release:	0
+Release:	1
 License:	BSD
 Group:		Daemons
 Group(pl):	Serwery
@@ -49,7 +49,7 @@ Bu paket að hizmetlerinde kullanýlan temel yazýlýmlardan inetd içerir.
 %patch -p1
 
 %build
-./configure
+./configure --with-c-compiler=gcc
 %{__make}
 
 %install
