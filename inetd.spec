@@ -53,13 +53,13 @@ install -d $RPM_BUILD_ROOT/usr/{sbin,man/{man8,man3}}
 
 install inetd/inetd $RPM_BUILD_ROOT/usr/sbin
 
-install inetd/*.8 $RPM_BUILD_ROOT/usr/man/man8
-install inetd/*.3 $RPM_BUILD_ROOT/usr/man/man3
+install inetd/*.8 $RPM_BUILD_ROOT%{_mandir}/man8
+install inetd/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/inetd.conf
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/inetd
 
-gzip -9fn $RPM_BUILD_ROOT/usr/man/man[38]/* README ChangeLog
+gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[38]/* README ChangeLog
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -79,7 +79,7 @@ fi
 
 %attr(750,root,root) %config /etc/rc.d/init.d/inetd
 %attr(755,root,root) /usr/sbin/inetd
-/usr/man/man[38]/*
+%{_mandir}/man[38]/*
 
 %changelog
 * Thu Apr 15 1999 Micha³ Kuratczyk <kura@pld.org.pl>
