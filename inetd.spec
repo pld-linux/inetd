@@ -9,7 +9,7 @@ Release:	11
 Copyright:	BSD
 Group:		Daemons
 Group(pl):	Serwery
-#gdzies na ftp.uk.linux.org
+# gdzies na ftp.uk.linux.org
 URL:		ftp://sunsite.unc.edu/pub/Linux/system/network
 Source0:	netkit-base-%{version}.tar.gz
 Source1:	%{name}.conf.default
@@ -18,6 +18,7 @@ Source3:	%{name}.sysconfig
 Patch0:		%{name}.patch
 Prereq:		/sbin/chkconfig
 Provides:	inetd
+Requires:	rc-scripts
 Obsoletes:	netkit-base
 Buildroot:	/tmp/%{name}-%{version}-root
 
