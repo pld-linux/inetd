@@ -17,7 +17,7 @@ Patch0:		%{name}.patch
 Prereq:		/sbin/chkconfig
 Provides:	inetdaemon
 Requires:	rc-scripts
-Requires:	rc-inetd
+Requires:	rc-inetd >= 0.8.1
 Requires:	/etc/rc.d/init.d/rc-inetd
 Obsoletes:	netkit-base
 Buildroot:	/tmp/%{name}-%{version}-root
@@ -61,7 +61,7 @@ install inetd/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 
 > $RPM_BUILD_ROOT/etc/inetd.conf
 
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd.script
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/rc-inet.script
 
 gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[38]/* README ChangeLog
 
@@ -70,14 +70,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 if [ -f /var/lock/subsys/rc-inetd ]; then
-    /etc/rc.d/init.d/rc-inetd stop &>/dev/null
+    /etc/rc.d/init.d/rc-inetd restart &>/dev/null
 else
     echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inetd" 1>&2
 fi
 
 %preun
-if [ -f /var/lock/subsys/rc-inetd ]; then
-    /etc/rc.d/init.d/rc-inetd restart &>/dev/null
+if [ $1 = "0" -a -f /var/lock/subsys/rc-inetd ]; then
+    /etc/rc.d/init.d/rc-inetd stop &>/dev/null
 fi
 
 
@@ -86,7 +86,7 @@ fi
 %doc {README,ChangeLog}.gz
 
 %attr(640,root,root) %ghost /etc/inetd.conf
-%attr(640,root,root) /etc/sysconfig/rc-inetd.script
+%attr(640,root,root) /etc/sysconfig/rc-inet.script
 %attr(755,root,root) %{_sbindir}/inetd
 
 %{_mandir}/man[38]/*
