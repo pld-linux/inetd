@@ -5,7 +5,7 @@ Summary(pl):	Super-serwer sieciowy -- inetd
 Summary(tr):	inetd programlarýný içerir
 Name:		inetd
 Version:	0.10
-Release:	5
+Release:	11
 Copyright:	BSD
 Group:		Daemons
 Group(pl):	Serwery
@@ -13,7 +13,8 @@ URL:		ftp://sunsite.unc.edu/pub/Linux/system/network
 Source0:	netkit-base-%{version}.tar.gz
 Source1:	%{name}.conf.default
 Source2:	%{name}.init
-Patch:		%{name}.patch
+Source3:	%{name}.sysconfig
+Patch0:		%{name}.patch
 Prereq:		/sbin/chkconfig
 Provides:	inetd
 Obsoletes:	netkit-base
@@ -48,8 +49,8 @@ make OPT_FLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
-install -d $RPM_BUILD_ROOT/usr/{sbin,man/{man8,man3}}
+install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
+install -d $RPM_BUILD_ROOT%{_prefix}/{sbin,share/man/{man8,man3}}
 
 install inetd/inetd $RPM_BUILD_ROOT%{_sbindir}
 
@@ -58,6 +59,7 @@ install inetd/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/inetd.conf
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/inetd
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/inetd
 
 gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[38]/* README ChangeLog
 
@@ -67,21 +69,37 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/chkconfig --add inetd
 
+if [ -f /var/lock/subsys/inetd ]; then
+    /etc/rc.d/init.d/inetd restart &>/dev/null
+fi
+
 %preun
 if [ "$1" = 0 ]; then
     /sbin/chkconfig --del inetd
 fi
 
+if [ -f /var/lock/subsys/inetd ]; then
+    /etc/rc.d/init.d/inetd stop &>/dev/null
+fi
+
 %files
 %defattr(644,root,root,755)
 %doc {README,ChangeLog}.gz
-%config(noreplace) %verify(not size mtime md5) /etc/inetd.conf
 
-%attr(750,root,root) %config /etc/rc.d/init.d/inetd
+%config(noreplace) %verify(not size mtime md5) /etc/inetd.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/*
+%attr(755,root,root) /etc/rc.d/init.d/inetd
 %attr(755,root,root) %{_sbindir}/inetd
+
 %{_mandir}/man[38]/*
 
 %changelog
+* Sat May 22 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+  [0.10-11]
+- added inetd.sysconfig,
+- fixed %preun && %post,
+- fixes for correct build.
+
 * Thu Apr 15 1999 Micha³ Kuratczyk <kura@pld.org.pl>
   [0.10-5]
 - gzipping documentation (instead bzipping)
@@ -100,26 +118,4 @@ fi
 - renamed to inetd,
 - added default kerberized services,
 - major changes - designed for PLD Tornado.
-
-* Mon May 04 1998 Michael K. Johnson <johnsonm@redhat.com>
-- fixed iniscript enhancement
-
-* Fri Apr 24 1998 Prospector System <bugs@redhat.com>
-- translations modified for de, fr, tr
-
-* Thu Apr 23 1998 Michael K. Johnson
-- enhanced initscript
-
-* Wed Oct 29 1997 Donnie Barnes <djb@redhat.com>
-- added %config(missingok) to init symlinks
-
-* Sun Oct 19 1997 Erik Troan <ewt@redhat.com>
-- turned off in runlevel 2
-- added status, restart options to init script
-
-* Mon Oct 13 1997 Erik Troan <ewt@redhat.com>
-- added chkconfig support
-
-* Wed Aug 27 1997 Erik Troan <ewt@redhat.com>
-- fixed init.d symlinks
-- fixed permissions on /etc/rc.d/inet
+- start at RH spec.
