@@ -5,7 +5,7 @@ Summary(pl):	Super-serwer sieciowy -- inetd
 Summary(tr):	inetd programlarýný içerir
 Name:		inetd
 Version:	0.17
-Release:	9
+Release:	10
 License:	BSD
 Group:		Daemons
 Source0:	ftp://ftp.linux.org.uk/pub/linux/Networking/netkit/netkit-base-%{version}.tar.gz
