@@ -4,11 +4,12 @@ Summary(fr):	Inclut les programm réseau inetd
 Summary(pl):	Super-serwer sieciowy -- inetd
 Summary(tr):	inetd programlarýný içerir
 Name:		inetd
-Version:	0.10
+Version:	0.11+
 Release:	11
 Copyright:	BSD
 Group:		Daemons
 Group(pl):	Serwery
+#gdzies na ftp.uk.linux.org
 URL:		ftp://sunsite.unc.edu/pub/Linux/system/network
 Source0:	netkit-base-%{version}.tar.gz
 Source1:	%{name}.conf.default
