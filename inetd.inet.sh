@@ -4,6 +4,7 @@ PROCESS_NAME=inetd
 
 # inet server config
 CONFIG_FILE=/etc/inetd.conf
+CONFIG_FILE_UMASK=027
 
 # inet server daemon executable file name
 INETDAEMON=/usr/sbin/inetd
