@@ -5,7 +5,7 @@ Summary(pl):	Super-serwer sieciowy -- inetd
 Summary(tr):	inetd programlarýný içerir
 Name:		inetd
 Version:	0.17
-Release:	1
+Release:	2
 License:	BSD
 Group:		Daemons
 Group(pl):	Serwery
@@ -21,6 +21,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	netkit-base
 Obsoletes:	inetdaemon
 Obsoletes:	rlinetd
+Obsoletes:	xinetd
 
 %description
 The netkit-base package contains the basic networking program inetd.
@@ -57,7 +58,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig} \
 	$RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man{5,8}}
 
-install -s inetd/inetd $RPM_BUILD_ROOT%{_sbindir}
+install inetd/inetd $RPM_BUILD_ROOT%{_sbindir}
 
 install inetd/*.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
@@ -66,7 +67,7 @@ install inetd/*.8 $RPM_BUILD_ROOT%{_mandir}/man8
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/rc-inet.script
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/man5
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man[58]/* README ChangeLog
+gzip -9nf README ChangeLog
 
 %clean
 rm -rf $RPM_BUILD_ROOT
