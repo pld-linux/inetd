@@ -5,7 +5,7 @@ Summary(pl):	Super-serwer sieciowy -- inetd
 Summary(tr):	inetd programlarýný içerir
 Name:		inetd
 Version:	0.17
-Release:	2
+Release:	3
 License:	BSD
 Group:		Daemons
 Group(pl):	Serwery
