@@ -50,7 +50,7 @@ Bu paket að hizmetlerinde kullanýlan temel yazýlýmlardan inetd içerir.
 
 %build
 ./configure
-make
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
