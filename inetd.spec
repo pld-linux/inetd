@@ -4,31 +4,28 @@ Summary(fr):	Inclut les programm réseau inetd
 Summary(pl):	Super-serwer sieciowy -- inetd
 Summary(tr):	inetd programlarýný içerir
 Name:		inetd
-Version:	0.11+
-Release:	11
+Version:	0.16
+Release:	3
 Copyright:	BSD
 Group:		Daemons
 Group(pl):	Serwery
-# gdzies na ftp.uk.linux.org
-URL:		ftp://sunsite.unc.edu/pub/Linux/system/network
-Source0:	netkit-base-%{version}.tar.gz
-Source1:	%{name}.inet.sh
-Patch0:		%{name}.patch
-Prereq:		/sbin/chkconfig
+Source0:	ftp://sunsite.unc.edu/pub/Linux/system/network/netkit-base-%{version}.tar.gz
+Source1:	inetd.inet.sh
+Source2:	inetd.conf.5
+Patch0:		netkit-base-configure.patch
 Provides:	inetdaemon
 Requires:	rc-scripts
 Requires:	rc-inetd >= 0.8.1
 Requires:	/etc/rc.d/init.d/rc-inetd
-Obsoletes:	netkit-base
 Buildroot:	/tmp/%{name}-%{version}-root
+Obsoletes:	netkit-base
+Obsoletes:	inetdaemon
+Obsoletes:	rlinetd
 
 %description
-This package provides the inetd program, which is used for
-basic networking.
-
-%description -l pl
-W pakieci tym znjduje siê super demon inetd, który kontroluje pracê 
-wiêkszo¶ci serwisów sieciowych Linuxa.
+The netkit-base package contains the basic networking program inetd. Inetd
+listens on certain Internet sockets for connection requests, decides what
+program should receive each request, and starts up that program.
 
 %description -l de
 Dieses Paket stellt das inetd-Programm bereit, der für elementare 
@@ -37,6 +34,11 @@ Netzwerkaufgaben benutzt wird.
 %description -l fr
 Ce paquetage contient les programm inetd, tous deux utilisés pour
 le réseau.
+
+%description -l pl
+W pakiecie tym znjduje siê program inetd. Inetd wychwytuje rz±dania po³±czeñ
+na portach sieciowych odsy³aj±c je do uruchamianego przez siebie konkretnego
+programu, który ma je obs³u¿yæ.
 
 %description -l tr
 Bu paket að hizmetlerinde kullanýlan temel yazýlýmlardan inetd 
@@ -47,39 +49,39 @@ içerir.
 %patch -p1
 
 %build
-make OPT_FLAGS="$RPM_OPT_FLAGS"
+./configure
+make
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
-install -d $RPM_BUILD_ROOT%{_prefix}/{sbin,share/man/{man8,man3}}
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man{5,8}}
 
-install inetd/inetd $RPM_BUILD_ROOT%{_sbindir}
+install -s inetd/inetd $RPM_BUILD_ROOT%{_sbindir}
 
 install inetd/*.8 $RPM_BUILD_ROOT%{_mandir}/man8
-install inetd/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 
 > $RPM_BUILD_ROOT/etc/inetd.conf
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/rc-inet.script
+install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/man5
 
-gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[38]/* README ChangeLog
+gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[58]/* README ChangeLog
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
 if [ -f /var/lock/subsys/rc-inetd ]; then
-    /etc/rc.d/init.d/rc-inetd restart &>/dev/null
+	/etc/rc.d/init.d/rc-inetd restart &>/dev/null
 else
-    echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inetd" 1>&2
+	echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inetd" 1>&2
 fi
 
 %preun
-if [ $1 = "0" -a -f /var/lock/subsys/rc-inetd ]; then
-    /etc/rc.d/init.d/rc-inetd stop &>/dev/null
+if [ "$1" = "0" -a -f /var/lock/subsys/rc-inetd ]; then
+	/etc/rc.d/init.d/rc-inetd stop 1>&2
 fi
-
 
 %files
 %defattr(644,root,root,755)
@@ -89,4 +91,4 @@ fi
 %attr(640,root,root) /etc/sysconfig/rc-inet.script
 %attr(755,root,root) %{_sbindir}/inetd
 
-%{_mandir}/man[38]/*
+%{_mandir}/man[58]/*
