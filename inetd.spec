@@ -23,9 +23,10 @@ Obsoletes:	inetdaemon
 Obsoletes:	rlinetd
 
 %description
-The netkit-base package contains the basic networking program inetd. Inetd
-listens on certain Internet sockets for connection requests, decides what
-program should receive each request, and starts up that program.
+The netkit-base package contains the basic networking program inetd.
+Inetd listens on certain Internet sockets for connection requests,
+decides what program should receive each request, and starts up that
+program.
 
 %description -l de
 Dieses Paket stellt das inetd-Programm bereit, der für elementare
@@ -37,11 +38,11 @@ réseau.
 
 %description -l pl
 W pakiecie tym zanjduje siê program inetd. Inetd wychwytuje ¿±dania
-po³±czeñ na portach sieciowych odsy³aj±c je do uruchamianego przez siebie
-konkretnego programu, który ma je obs³u¿yæ.
+po³±czeñ na portach sieciowych odsy³aj±c je do uruchamianego przez
+siebie konkretnego programu, który ma je obs³u¿yæ.
 
 %description -l tr
-Bu paket að hizmetlerinde kullanýlan temel yazýlýmlardan inetd  içerir.
+Bu paket að hizmetlerinde kullanýlan temel yazýlýmlardan inetd içerir.
 
 %prep
 %setup -q -n netkit-base-%{version}
