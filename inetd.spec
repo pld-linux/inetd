@@ -73,10 +73,16 @@ gzip -9nf README ChangeLog
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%rc_inetd_post
+if [ -f /var/lock/subsys/rc-inetd ]; then
+	/etc/rc.d/init.d/rc-inetd restart &>/dev/null
+else
+	echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inetd" 1>&2
+fi
 
-%postun
-%rc_inetd_postun
+%preun
+if [ "$1" = "0" -a -f /var/lock/subsys/rc-inetd ]; then
+	/etc/rc.d/init.d/rc-inetd stop 1>&2
+fi
 
 %files
 %defattr(644,root,root,755)
