@@ -56,6 +56,10 @@ parse_one_service()
 
 	[ "$SERVER" = "tcpd" ] && SERVER="/usr/sbin/tcpd"
 	[ "${GROUP:-none}" = "none" ] || USER="$USER.$GROUP"
+	# if we have service on some unusual port, or have some service with strange name
+	# how to grep tab???
+	grep -qs "^${SERVICE_NAME}[^a-zA-Z0-9]*${PORT}/" /etc/services || SERVICE_NAME=${PORT}
+
 	echo "$SERVICE_NAME	$SOCK_TYPE	$PROTOCOL	$FLAGS	$USER	$SERVER $DAEMON $DAEMONARGS"
 
 	return 0
