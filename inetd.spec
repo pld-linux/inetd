@@ -36,7 +36,7 @@ Ce paquetage contient les programm inetd, tous deux utilisés pour le
 réseau.
 
 %description -l pl
-W pakiecie tym znjduje siê program inetd. Inetd wychwytuje rz±dania
+W pakiecie tym zanjduje siê program inetd. Inetd wychwytuje ¿±dania
 po³±czeñ na portach sieciowych odsy³aj±c je do uruchamianego przez siebie
 konkretnego programu, który ma je obs³u¿yæ.
 
