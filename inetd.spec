@@ -1,11 +1,11 @@
-Summary:	The internet superserver daemon -- inetd
-Summary(de):	Enthält die Netzwerkprogramm inetd 
-Summary(fr):	Inclut les programm réseau inetd 
+Summary:	The Internet superserver daemon -- inetd
+Summary(de):	Enthält die Netzwerkprogramm inetd
+Summary(fr):	Inclut les programm réseau inetd
 Summary(pl):	Super-serwer sieciowy -- inetd
 Summary(tr):	inetd programlarýný içerir
 Name:		inetd
 Version:	0.17
-Release:	5
+Release:	6
 License:	BSD
 Group:		Daemons
 Group(de):	Server
@@ -14,15 +14,16 @@ Source0:	ftp://ftp.linux.org.uk/pub/linux/Networking/netkit/netkit-base-%{versio
 Source1:	%{name}.inet.sh
 Source2:	%{name}.conf.5
 Patch0:		netkit-base-configure.patch
-Provides:	inetdaemon
-Prereq:		rc-scripts
+PreReq:		rc-scripts
 Requires:	rc-inetd >= 0.8.1
 Requires:	/etc/rc.d/init.d/rc-inetd
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Obsoletes:	netkit-base
+Requires:	tcp_wrappers
+Provides:	inetdaemon
 Obsoletes:	inetdaemon
+Obsoletes:	netkit-base
 Obsoletes:	rlinetd
 Obsoletes:	xinetd
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 The netkit-base package contains the basic networking program inetd.
@@ -40,7 +41,7 @@ réseau.
 
 %description -l pl
 W pakiecie tym znajduje siê program inetd. Inetd wychwytuje ¿±dania
-po³±czeñ na portach sieciowych odsy³aj±c je do uruchamianego przez
+po³±czeñ na portach sieciowych, odsy³aj±c je do uruchamianego przez
 siebie konkretnego programu, który ma je obs³u¿yæ.
 
 %description -l tr
@@ -60,7 +61,6 @@ install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig} \
 	$RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man{5,8}}
 
 install inetd/inetd $RPM_BUILD_ROOT%{_sbindir}
-
 install inetd/*.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
 > $RPM_BUILD_ROOT%{_sysconfdir}/inetd.conf
