@@ -17,7 +17,7 @@ Provides:	inetdaemon
 Requires:	rc-scripts
 Requires:	rc-inetd >= 0.8.1
 Requires:	/etc/rc.d/init.d/rc-inetd
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	netkit-base
 Obsoletes:	inetdaemon
 Obsoletes:	rlinetd
