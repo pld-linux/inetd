@@ -12,13 +12,13 @@ Group(pl):	Serwery
 # gdzies na ftp.uk.linux.org
 URL:		ftp://sunsite.unc.edu/pub/Linux/system/network
 Source0:	netkit-base-%{version}.tar.gz
-Source1:	%{name}.conf.default
-Source2:	%{name}.init
-Source3:	%{name}.sysconfig
+Source1:	%{name}.inet.sh
 Patch0:		%{name}.patch
 Prereq:		/sbin/chkconfig
 Provides:	inetdaemon
 Requires:	rc-scripts
+Requires:	rc-inetd
+Requires:	/etc/rc.d/init.d/rc-inetd
 Obsoletes:	netkit-base
 Buildroot:	/tmp/%{name}-%{version}-root
 
@@ -59,9 +59,9 @@ install inetd/inetd $RPM_BUILD_ROOT%{_sbindir}
 install inetd/*.8 $RPM_BUILD_ROOT%{_mandir}/man8
 install inetd/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/inetd.conf
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/inetd
-install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/inetd
+> $RPM_BUILD_ROOT/etc/inetd.conf
+
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/rc-inetd.script
 
 gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[38]/* README ChangeLog
 
@@ -69,28 +69,24 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[38]/* README ChangeLog
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/chkconfig --add inetd
-
-if [ -f /var/lock/subsys/inetd ]; then
-    /etc/rc.d/init.d/inetd restart &>/dev/null
+if [ -f /var/lock/subsys/rc-inetd ]; then
+    /etc/rc.d/init.d/rc-inetd stop &>/dev/null
+else
+    echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inetd" 1>&2
 fi
 
 %preun
-if [ "$1" = 0 ]; then
-    /sbin/chkconfig --del inetd
+if [ -f /var/lock/subsys/rc-inetd ]; then
+    /etc/rc.d/init.d/rc-inetd restart &>/dev/null
 fi
 
-if [ -f /var/lock/subsys/inetd ]; then
-    /etc/rc.d/init.d/inetd stop &>/dev/null
-fi
 
 %files
 %defattr(644,root,root,755)
 %doc {README,ChangeLog}.gz
 
-%config(noreplace) %verify(not size mtime md5) /etc/inetd.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/*
-%attr(755,root,root) /etc/rc.d/init.d/inetd
+%attr(640,root,root) %ghost /etc/inetd.conf
+%attr(640,root,root) /etc/sysconfig/rc-inetd.script
 %attr(755,root,root) %{_sbindir}/inetd
 
 %{_mandir}/man[38]/*
