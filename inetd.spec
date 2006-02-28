@@ -5,7 +5,7 @@ Summary(pl):	Super-serwer sieciowy -- inetd
 Summary(tr):	inetd programlarýný içerir
 Name:		inetd
 Version:	0.17
-Release:	10
+Release:	11
 License:	BSD
 Group:		Daemons
 Source0:	ftp://ftp.linux.org.uk/pub/linux/Networking/netkit/netkit-base-%{version}.tar.gz
@@ -15,9 +15,9 @@ Source2:	%{name}.conf.5
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source3-md5:	6e7cdb6277c4333a9c0d1e3e2231f29f
 Patch0:		netkit-base-configure.patch
-PreReq:		rc-scripts
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	rc-inetd >= 0.8.1
-Requires:	/etc/rc.d/init.d/rc-inetd
+Requires:	rc-scripts
 Requires:	tcp_wrappers
 Provides:	inetdaemon
 Obsoletes:	inetdaemon
@@ -75,15 +75,11 @@ bzip2 -dc %{SOURCE3} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 rm -rf $RPM_BUILD_ROOT
 
 %post
-if [ -f /var/lock/subsys/rc-inetd ]; then
-	/etc/rc.d/init.d/rc-inetd restart &>/dev/null
-else
-	echo "Type \"/etc/rc.d/init.d/rc-inetd start\" to start inetd" 1>&2
-fi
+%service -q rc-inetd restart
 
 %preun
-if [ "$1" = "0" -a -f /var/lock/subsys/rc-inetd ]; then
-	/etc/rc.d/init.d/rc-inetd stop 1>&2
+if [ "$1" = "0" ]; then
+	%service -q rc-inetd restart
 fi
 
 %files
