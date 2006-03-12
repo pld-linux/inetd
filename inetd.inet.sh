@@ -20,11 +20,15 @@ parse_one_service()
 
 	[ ${SERVICE_NAME:-not} = "not" ]	&& ERROR_CODE=11
 	[ ${PROTOCOL:-not} = "not" ]		&& ERROR_CODE=12
-	[ ${PORT:-not} = "not" ]		&& ERROR_CODE=13
 	[ ${USER:-not} = "not" ]		&& ERROR_CODE=14
 	[ ${SERVER:-not} = "not" ]		&& ERROR_CODE=15
 	[ ${FLAGS:-not} = "not" ]		&& ERROR_CODE=16
 	[ ${DAEMON:-not} = "not" ]		&& ERROR_CODE=17
+	if [ ${RPCNAME:-not} = "not" ]; then
+		[ ${PORT:-not} = "not" ]		&& ERROR_CODE=13
+	else
+		[ ${RPCVERSION:-not} = "not" ]		&& ERROR_CODE=18
+	fi
 
 	if [ ! $ERROR_CODE -eq 0 ] ; then
 		echo "ERROR: Parse error."
@@ -50,6 +54,9 @@ parse_one_service()
 			17)
 				echo "DAEMON not defined in /etc/sysconfig/rc-inetd/$CURRENT_SERVICE."
 				;;
+			18)
+				echo "RPCVERSION not defined in /etc/sysconfig/rc-inetd/$CURRENT_SERVICE."
+				;;
 		esac
 		return $ERROR_CODE
 	fi
@@ -64,7 +71,11 @@ parse_one_service()
 	|| grep -qs "[^#]*${PORT}/$PROTOCOL[^#]*[ \	]*${SERVICE_NAME}[ \	]" /etc/services \
 	|| SERVICE_NAME=${PORT}
 
-	echo "$SERVICE_NAME	$SOCK_TYPE	$PROTOCOL	$FLAGS	$USER	$SERVER $DAEMON $DAEMONARGS"
+	if [ ${RPCNAME:-not} = "not" ]; then
+		echo "$SERVICE_NAME	$SOCK_TYPE	$PROTOCOL	$FLAGS	$USER	$SERVER $DAEMON $DAEMONARGS"
+	else
+		echo "$RPCNAME/$RPCVERSION	$SOCK_TYPE	rpc/$PROTOCOL	$FLAGS	$USER	$SERVER $DAEMON $DAEMONARGS"
+	fi
 
 	return 0
 }
