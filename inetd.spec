@@ -5,7 +5,7 @@ Summary(pl):	Super-serwer sieciowy -- inetd
 Summary(tr):	inetd programlarýný içerir
 Name:		inetd
 Version:	0.17
-Release:	11
+Release:	12
 License:	BSD
 Group:		Daemons
 Source0:	ftp://ftp.linux.org.uk/pub/linux/Networking/netkit/netkit-base-%{version}.tar.gz
@@ -15,6 +15,7 @@ Source2:	%{name}.conf.5
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source3-md5:	6e7cdb6277c4333a9c0d1e3e2231f29f
 Patch0:		netkit-base-configure.patch
+Patch1:		netkit-base-fixes.patch
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	rc-inetd >= 0.8.1
 Requires:	rc-scripts
@@ -50,10 +51,13 @@ Bu paket að hizmetlerinde kullanýlan temel yazýlýmlardan inetd içerir.
 
 %prep
 %setup -q -n netkit-base-%{version}
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
-./configure --with-c-compiler=gcc
+export RPM_OPT_FLAGS="%{rpmcflags}"
+./configure \
+	--with-c-compiler="%{__cc}"
 %{__make}
 
 %install
@@ -84,10 +88,11 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc README ChangeLog
-
+%doc BUGS ChangeLog README
 %attr(640,root,root) %ghost %{_sysconfdir}/inetd.conf
 %attr(640,root,root) /etc/sysconfig/rc-inet.script
 %attr(755,root,root) %{_sbindir}/inetd
-
 %{_mandir}/man[58]/*
+%lang(es) %{_mandir}/es/man8/inetd.8*
+%lang(ja) %{_mandir}/ja/man8/inetd.8*
+%lang(pl) %{_mandir}/pl/man8/inetd.8*
