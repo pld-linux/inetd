@@ -1,0 +1,64 @@
+--- netkit-base-0.17/inetd/inetd.c.orig	2000-07-25 01:48:34.000000000 +0200
++++ netkit-base-0.17/inetd/inetd.c	2006-03-12 14:30:35.329904500 +0100
+@@ -869,8 +869,7 @@
+ 	int on = 1;
+ 
+ 	if ((sep->se_fd = socket(sep->se_family, sep->se_socktype, 0)) < 0) {
+-		syslog(LOG_ERR, "%s: socket: %m", service_name(sep),
+-		    sep->se_service, sep->se_proto);
++		syslog(LOG_ERR, "%s: socket: %m", service_name(sep));
+ 
+ 		if (errno == EMFILE) {
+ 			syslog(LOG_ALERT, 
+@@ -888,8 +887,7 @@
+ 		syslog(LOG_ERR, "setsockopt (SO_REUSEADDR): %m");
+ #undef turnon
+ 	if (bind(sep->se_fd, &sep->se_ctrladdr, sep->se_ctrladdr_size) < 0) {
+-		syslog(LOG_ERR, "%s: bind: %m", service_name(sep),
+-		    sep->se_service, sep->se_proto);
++		syslog(LOG_ERR, "%s: bind: %m", service_name(sep));
+ 		(void) close(sep->se_fd);
+ 		sep->se_fd = -1;
+ 		if (!timingout) {
+@@ -938,8 +936,7 @@
+ 	}
+ 	m = sizeof(sn);
+ 	if (getsockname(sep->se_fd, (struct sockaddr *)&sn, &m) < 0) {
+-		syslog(LOG_ERR, "%s: getsockname: %m", service_name(sep),
+-		    sep->se_service, sep->se_proto);
++		syslog(LOG_ERR, "%s: getsockname: %m", service_name(sep));
+ 		return;
+ 	}
+ 
+@@ -1025,8 +1022,8 @@
+ 	rl.rlim_cur = MIN(rl.rlim_max, rl.rlim_cur + FD_CHUNK);
+ 	if (rl.rlim_cur <= rlim_ofile_cur) {
+ 		syslog(LOG_ERR,
+-			"bump_nofile: cannot extend file limit, max = %d",
+-			rl.rlim_cur);
++			"bump_nofile: cannot extend file limit, max = %llu",
++			(unsigned long long)rl.rlim_cur);
+ 		return -1;
+ 	}
+ 
+--- netkit-base-0.17/inetd/servtab.c.orig	2000-07-22 22:20:50.000000000 +0200
++++ netkit-base-0.17/inetd/servtab.c	2006-03-12 14:31:26.225085250 +0100
+@@ -771,7 +771,7 @@
+ 			return;
+ 		}
+ 		
+-#define SWAP(type, a, b) {type c=(type)a; (type)a=(type)b; (type)b=(type)c;}
++#define SWAP(type, a, b) {type c=(type)a; a=(type)b; b=(type)c;}
+ 
+ 		/*
+ 		 * sep->se_wait may be holding the pid of a daemon
+--- netkit-base-0.17/inetd/builtins.c.orig	2000-07-22 22:13:07.000000000 +0200
++++ netkit-base-0.17/inetd/builtins.c	2006-03-12 14:32:12.307965250 +0100
+@@ -11,6 +11,7 @@
+ #include <errno.h>
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <time.h>
+ #include <unistd.h>
+ 
+ #include "servtab.h"
