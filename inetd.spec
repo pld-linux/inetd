@@ -1,8 +1,8 @@
 Summary:	The Internet superserver daemon -- inetd
-Summary(de):	Enthält die Netzwerkprogramm inetd
-Summary(fr):	Inclut les programm réseau inetd
-Summary(pl):	Super-serwer sieciowy -- inetd
-Summary(tr):	inetd programlarını içerir
+Summary(de.UTF-8):   EnthÃ¤lt die Netzwerkprogramm inetd
+Summary(fr.UTF-8):   Inclut les programm rÃ©seau inetd
+Summary(pl.UTF-8):   Super-serwer sieciowy -- inetd
+Summary(tr.UTF-8):   inetd programlarÄ±nÄ± iÃ§erir
 Name:		inetd
 Version:	0.17
 Release:	12
@@ -33,21 +33,21 @@ Inetd listens on certain Internet sockets for connection requests,
 decides what program should receive each request, and starts up that
 program.
 
-%description -l de
-Dieses Paket stellt das inetd-Programm bereit, der für elementare
+%description -l de.UTF-8
+Dieses Paket stellt das inetd-Programm bereit, der fÃ¼r elementare
 Netzwerkaufgaben benutzt wird.
 
-%description -l fr
-Ce paquetage contient les programm inetd, tous deux utilisés pour le
-réseau.
+%description -l fr.UTF-8
+Ce paquetage contient les programm inetd, tous deux utilisÃ©s pour le
+rÃ©seau.
 
-%description -l pl
-W pakiecie tym znajduje siê program inetd. Inetd wychwytuje ¿±dania
-po³±czeñ na portach sieciowych, odsy³aj±c je do uruchamianego przez
-siebie konkretnego programu, który ma je obs³u¿yæ.
+%description -l pl.UTF-8
+W pakiecie tym znajduje siÄ™ program inetd. Inetd wychwytuje Å¼Ä…dania
+poÅ‚Ä…czeÅ„ na portach sieciowych, odsyÅ‚ajÄ…c je do uruchamianego przez
+siebie konkretnego programu, ktÃ³ry ma je obsÅ‚uÅ¼yÄ‡.
 
-%description -l tr
-Bu paket ağ hizmetlerinde kullanılan temel yazılımlardan inetd içerir.
+%description -l tr.UTF-8
+Bu paket aÄŸ hizmetlerinde kullanÄ±lan temel yazÄ±lÄ±mlardan inetd iÃ§erir.
 
 %prep
 %setup -q -n netkit-base-%{version}
