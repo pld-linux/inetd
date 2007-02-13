@@ -1,8 +1,8 @@
 Summary:	The Internet superserver daemon -- inetd
-Summary(de.UTF-8):   Enthält die Netzwerkprogramm inetd
-Summary(fr.UTF-8):   Inclut les programm réseau inetd
-Summary(pl.UTF-8):   Super-serwer sieciowy -- inetd
-Summary(tr.UTF-8):   inetd programlarını içerir
+Summary(de.UTF-8):	Enthält die Netzwerkprogramm inetd
+Summary(fr.UTF-8):	Inclut les programm réseau inetd
+Summary(pl.UTF-8):	Super-serwer sieciowy -- inetd
+Summary(tr.UTF-8):	inetd programlarını içerir
 Name:		inetd
 Version:	0.17
 Release:	12
