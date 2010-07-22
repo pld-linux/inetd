@@ -70,6 +70,7 @@ parse_one_service()
 			else
 				_WAIT="$i"
 			fi
+			;;
 		*)
 			;;
 		esac
