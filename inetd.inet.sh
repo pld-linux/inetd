@@ -61,8 +61,20 @@ parse_one_service()
 		return $ERROR_CODE
 	fi
 
+	_WAIT=
+	for i in $FLAGS; do
+		case "$i" in
+		wait|nowait)
+			if [ "${MAX_CONNECTIONS:-none}" = "none" ]; then
+				_WAIT="$i.$MAX_CONNECTIONS"
+			else
+				_WAIT="$i"
+			fi
+		*)
+			;;
+		esac
+	done
 	[ "$SERVER" = "tcpd" ] && SERVER="/usr/sbin/tcpd"
-	[ "${MAX_CONNECTIONS:-none}" = "none" ] || FLAGS="$FLAGS.$MAX_CONNECTIONS"
 	[ "${GROUP:-none}" = "none" ] || USER="$USER.$GROUP"
 	# if we have service on some unusual port, or have some service with strange name
 	# how to grep tab???   quoting it ?
@@ -72,9 +84,9 @@ parse_one_service()
 	|| SERVICE_NAME=${PORT}
 
 	if [ ${RPCNAME:-not} = "not" ]; then
-		echo "$SERVICE_NAME	$SOCK_TYPE	$PROTOCOL	$FLAGS	$USER	$SERVER $DAEMON $DAEMONARGS"
+		echo "$SERVICE_NAME	$SOCK_TYPE	$PROTOCOL	$_WAIT	$USER	$SERVER $DAEMON $DAEMONARGS"
 	else
-		echo "$RPCNAME/$RPCVERSION	$SOCK_TYPE	rpc/$PROTOCOL	$FLAGS	$USER	$SERVER $DAEMON $DAEMONARGS"
+		echo "$RPCNAME/$RPCVERSION	$SOCK_TYPE	rpc/$PROTOCOL	$_WAIT	$USER	$SERVER $DAEMON $DAEMONARGS"
 	fi
 
 	return 0
