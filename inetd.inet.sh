@@ -65,7 +65,7 @@ parse_one_service()
 	for i in $FLAGS; do
 		case "$i" in
 		wait|nowait)
-			if [ "${MAX_CONNECTIONS:-none}" = "none" ]; then
+			if [ "${MAX_CONNECTIONS:-none}" != "none" ]; then
 				_WAIT="$i.$MAX_CONNECTIONS"
 			else
 				_WAIT="$i"
