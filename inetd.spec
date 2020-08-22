@@ -8,7 +8,7 @@ Version:	0.17
 Release:	15
 License:	BSD
 Group:		Daemons
-Source0:	ftp://ftp.linux.org.uk/pub/linux/Networking/netkit/netkit-base-%{version}.tar.gz
+Source0:	http://ftp.linux.org.uk/pub/linux/Networking/netkit/netkit-base-%{version}.tar.gz
 # Source0-md5:	1f0193358e92559ec0f598b09ccbc0ec
 Source1:	%{name}.inet.sh
 Source2:	%{name}.conf.5
@@ -92,7 +92,8 @@ fi
 %attr(640,root,root) %ghost %{_sysconfdir}/inetd.conf
 %attr(640,root,root) /etc/sysconfig/rc-inet.script
 %attr(755,root,root) %{_sbindir}/inetd
-%{_mandir}/man[58]/*
+%{_mandir}/man5/inetd.conf.5*
+%{_mandir}/man8/inetd.8*
 %lang(es) %{_mandir}/es/man8/inetd.8*
 %lang(ja) %{_mandir}/ja/man8/inetd.8*
 %lang(pl) %{_mandir}/pl/man8/inetd.8*
