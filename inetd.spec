@@ -51,8 +51,8 @@ Bu paket ağ hizmetlerinde kullanılan temel yazılımlardan inetd içerir.
 
 %prep
 %setup -q -n netkit-base-%{version}
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 
 %build
 export RPM_OPT_FLAGS="%{rpmcflags}"
